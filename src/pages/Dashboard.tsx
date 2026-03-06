@@ -6,6 +6,7 @@ import { Greeting } from '@/components/dashboard/Greeting';
 import { ContextualTip } from '@/components/dashboard/ContextualTip';
 import { SupplementChecklist } from '@/components/dashboard/SupplementChecklist';
 import { DailyInsight } from '@/components/dashboard/DailyInsight';
+import { RiseAnimation } from '@/components/ui/RiseAnimation';
 import { useAuthStore } from '@/stores/authStore';
 import { useCycleStore } from '@/stores/cycleStore';
 import { useCycle } from '@/hooks/useCycle';
@@ -38,7 +39,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 pb-24">
+    <RiseAnimation className="flex flex-col gap-4 pb-4">
       <Greeting
         displayName={profile?.display_name}
         phase={cycleInfo?.phase}
@@ -50,7 +51,7 @@ export function Dashboard() {
           <ContextualTip phase={cycleInfo.phase} phaseDay={cycleInfo.phaseDay} />
         </Card>
       ) : (
-        <Card className="text-center text-body text-warm-gray">
+        <Card className="text-center text-body text-text-secondary">
           <p>Configure la date de tes dernieres regles dans ton profil pour voir ton cycle.</p>
         </Card>
       )}
@@ -67,6 +68,6 @@ export function Dashboard() {
       </Card>
 
       <DailyInsight />
-    </div>
+    </RiseAnimation>
   );
 }

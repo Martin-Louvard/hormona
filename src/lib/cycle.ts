@@ -102,8 +102,15 @@ export const phaseLabels: Record<CyclePhase, string> = {
 };
 
 export const phaseColors: Record<CyclePhase, string> = {
-  menstrual: '#E88D9E',
-  follicular: '#7EC8B8',
-  ovulatory: '#FFD166',
-  luteal: '#C3B1E1',
+  menstrual: '#C97B8B',
+  follicular: '#5BA68A',
+  ovulatory: '#D4A847',
+  luteal: '#9B85C4',
+};
+
+export const phaseColorsSoft: Record<CyclePhase, string> = {
+  menstrual: '#F5DDE3',
+  follicular: '#D4EDE4',
+  ovulatory: '#F5EAC8',
+  luteal: '#E4DCF0',
 };

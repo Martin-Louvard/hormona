@@ -1,21 +1,34 @@
 import type { HTMLAttributes } from 'react';
 
-type Variant = 'default' | 'highlight' | 'interactive';
+type Variant = 'default' | 'highlight' | 'interactive' | 'subtle';
+type Level = 1 | 2 | 3;
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   variant?: Variant;
+  level?: Level;
   phaseColor?: string;
 }
 
-export function Card({ className = '', children, variant = 'default', phaseColor, ...props }: CardProps) {
-  const base = 'rounded-3xl bg-white p-5 shadow-[0_2px_12px_rgba(74,44,94,0.06)]';
+const levelStyles: Record<Level, string> = {
+  1: 'bg-white rounded-[20px] p-5 shadow-[0_2px_16px_rgba(45,34,53,0.06),0_0_0_1px_rgba(45,34,53,0.03)]',
+  2: 'bg-bg-subtle rounded-2xl p-4 border border-[rgba(45,34,53,0.04)]',
+  3: 'bg-white rounded-[20px] p-5 shadow-[0_2px_16px_rgba(45,34,53,0.06),0_0_0_1px_rgba(45,34,53,0.03)] transition-[transform,box-shadow] duration-[180ms] ease-out cursor-pointer active:scale-[0.97] active:shadow-[0_1px_8px_rgba(45,34,53,0.08)]',
+};
 
-  const variantStyles: Record<Variant, string> = {
-    default: '',
-    highlight: 'border-l-[3px]',
-    interactive: 'hover:shadow-md active:scale-[0.98] transition-all cursor-pointer',
-  };
+function variantToLevel(variant: Variant): Level {
+  switch (variant) {
+    case 'subtle': return 2;
+    case 'interactive': return 3;
+    default: return 1;
+  }
+}
+
+export function Card({ className = '', children, variant = 'default', level, phaseColor, ...props }: CardProps) {
+  const resolvedLevel = level ?? variantToLevel(variant);
+  const base = levelStyles[resolvedLevel];
+
+  const highlightStyle = variant === 'highlight' ? 'border-l-[3px]' : '';
 
   const style = variant === 'highlight' && phaseColor
     ? { borderLeftColor: phaseColor }
@@ -23,7 +36,7 @@ export function Card({ className = '', children, variant = 'default', phaseColor
 
   return (
     <div
-      className={`${base} ${variantStyles[variant]} ${className}`}
+      className={`${base} ${highlightStyle} ${className}`}
       style={style}
       {...props}
     >

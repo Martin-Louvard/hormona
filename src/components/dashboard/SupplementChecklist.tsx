@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
 import { useSupplementStore } from '@/stores/supplementStore';
@@ -12,6 +12,7 @@ function getCurrentPeriod(): SupplementPeriod {
 export function SupplementChecklist() {
   const profile = useAuthStore((s) => s.profile);
   const { supplements, todayLogs, fetchSupplements, toggleLog } = useSupplementStore();
+  const [justChecked, setJustChecked] = useState<string | null>(null);
 
   useEffect(() => {
     if (profile?.id) {
@@ -23,12 +24,12 @@ export function SupplementChecklist() {
     return (
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Pill size={18} className="text-warm-gray-light" />
-          <span className="text-caption text-warm-gray">Pas de complements configures</span>
+          <Pill size={18} strokeWidth={1.75} className="text-text-muted" />
+          <span className="text-caption text-text-secondary">Pas de complements configures</span>
         </div>
         <Link
           to="/supplements"
-          className="text-caption font-medium text-rose-deep min-h-[44px] flex items-center"
+          className="text-caption font-medium text-accent-primary min-h-[44px] flex items-center"
         >
           Configurer
         </Link>
@@ -45,12 +46,14 @@ export function SupplementChecklist() {
 
   const handleToggle = async (supplementId: string) => {
     if (!profile) return;
+    setJustChecked(supplementId);
     await toggleLog(profile.id, supplementId, period);
+    setTimeout(() => setJustChecked(null), 500);
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-tiny font-medium text-warm-gray/60">
+      <p className="text-tiny font-medium text-text-muted">
         Complements du {period === 'morning' ? 'matin' : 'soir'}
       </p>
       {relevant.map((supplement) => {
@@ -58,33 +61,43 @@ export function SupplementChecklist() {
           (l) => l.supplement_id === supplement.id && l.period === period
         );
         const lowStock = supplement.stock_remaining_days <= 5;
+        const isJustChecked = justChecked === supplement.id;
 
         return (
           <button
             key={supplement.id}
             onClick={() => handleToggle(supplement.id)}
             className={`flex items-center gap-3 rounded-2xl px-3 py-2 text-left transition-all min-h-[44px] ${
-              taken ? 'bg-sage/10' : 'bg-cream-dark hover:bg-cream-dark/80'
+              taken ? 'bg-accent-success/10' : 'bg-bg-subtle hover:bg-bg-subtle/80'
             }`}
           >
             <div
               className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
                 taken
-                  ? 'border-sage bg-sage text-white'
-                  : 'border-warm-gray/30'
+                  ? 'border-accent-success bg-accent-success text-white'
+                  : 'border-text-muted/30'
               }`}
             >
-              {taken && <Check size={14} />}
+              {taken && (
+                <Check
+                  size={14}
+                  strokeWidth={1.75}
+                  className={isJustChecked ? 'animate-check-bounce' : ''}
+                />
+              )}
             </div>
             <span
-              className={`flex-1 text-caption ${
-                taken ? 'text-warm-gray line-through' : 'text-deep-plum'
+              className={`relative flex-1 text-caption transition-colors ${
+                taken ? 'text-text-muted line-through' : 'text-text-primary'
               }`}
             >
               {supplement.name}
+              {isJustChecked && taken && (
+                <span className="ml-1 inline-block animate-sparkle text-xs">&#10024;</span>
+              )}
             </span>
             {lowStock && !taken && (
-              <AlertTriangle size={14} className="text-coral-warning" />
+              <AlertTriangle size={14} strokeWidth={1.75} className="text-accent-warning" />
             )}
           </button>
         );

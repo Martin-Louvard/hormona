@@ -20,10 +20,10 @@ export function App() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen-safe items-center justify-center bg-cream">
+      <div className="flex min-h-screen-safe items-center justify-center bg-bg-base">
         <div className="text-center">
-          <h1 className="font-serif text-display text-deep-plum">Hormona</h1>
-          <p className="mt-2 text-body text-warm-gray">Chargement...</p>
+          <h1 className="font-serif-display text-display text-text-primary">Hormona</h1>
+          <p className="mt-2 text-body text-text-muted">Chargement...</p>
         </div>
       </div>
     );
@@ -50,9 +50,9 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen-safe bg-cream">
+    <div className="app-shell min-h-screen-safe bg-bg-base">
       <OfflineBanner />
-      <main className="mx-auto max-w-lg">
+      <main className="px-5 pt-4 pb-20">
         <AppRoutes />
       </main>
       <BottomNav />
