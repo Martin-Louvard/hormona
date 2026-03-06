@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="0" fill="#FFF8F0"/>
+  <text x="256" y="281.6" font-family="Georgia, serif" font-size="230.4" font-weight="bold" fill="#4A2C5E" text-anchor="middle" dominant-baseline="middle">H</text>
+  <circle cx="368.64" cy="143.36" r="17.92" fill="#F2B5D4"/>
+  <circle cx="348.16" cy="122.88" r="17.92" fill="#F2B5D4"/>
+  <circle cx="389.12" cy="122.88" r="17.92" fill="#F2B5D4"/>
+  <circle cx="353.28" cy="163.84" r="17.92" fill="#F2B5D4"/>
+  <circle cx="384" cy="163.84" r="17.92" fill="#F2B5D4"/>
+  <circle cx="368.64" cy="143.36" r="10.24" fill="#FFD166"/>
+</svg>
