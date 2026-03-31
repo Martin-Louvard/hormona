@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { BookOpen, Pill, FileText, ChevronRight } from 'lucide-react';
+import { Pill, FileText, ChevronRight } from 'lucide-react';
 
 export function More() {
   const { profile, signOut } = useAuthStore();
@@ -16,17 +16,6 @@ export function More() {
         <p className="mt-1 text-body text-warm-gray">{profile?.display_name || 'Utilisatrice'}</p>
         <p className="text-tiny text-warm-gray/60">Cycle moyen : {profile?.cycle_length_avg ?? 28} jours</p>
       </Card>
-
-      <Link to="/encyclopedia">
-        <Card variant="interactive" className="flex items-center gap-3">
-          <BookOpen size={22} className="text-lavender" />
-          <div className="flex-1">
-            <p className="text-caption font-medium text-deep-plum">Encyclopedie SOPK</p>
-            <p className="text-tiny text-warm-gray">Comprendre, symptomes, etudes</p>
-          </div>
-          <ChevronRight size={18} className="text-warm-gray-light" />
-        </Card>
-      </Link>
 
       <Link to="/supplements">
         <Card variant="interactive" className="flex items-center gap-3">

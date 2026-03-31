@@ -1,10 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Utensils, Activity, BookHeart, MoreHorizontal } from 'lucide-react';
+import { BookOpen, Heart, BookHeart, MoreHorizontal } from 'lucide-react';
 
 const links = [
-  { to: '/', icon: Home, label: 'Accueil' },
-  { to: '/nutrition', icon: Utensils, label: 'Nutrition' },
-  { to: '/movement', icon: Activity, label: 'Sport' },
+  { to: '/', icon: BookOpen, label: 'Decouvrir' },
+  { to: '/wellbeing', icon: Heart, label: 'Bien-etre' },
   { to: '/tracking', icon: BookHeart, label: 'Journal' },
   { to: '/more', icon: MoreHorizontal, label: 'Plus' },
 ];
@@ -17,6 +16,7 @@ export function BottomNav() {
           <NavLink
             key={to}
             to={to}
+            end={to === '/'}
             className={({ isActive }) =>
               `relative flex flex-col items-center gap-0.5 px-3 py-2 text-[10px] min-w-[48px] min-h-[48px] justify-center transition-colors ${
                 isActive ? 'text-accent-primary' : 'text-text-muted'

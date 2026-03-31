@@ -13,7 +13,7 @@ import { PostEffortPrompt } from '@/components/movement/PostEffortPrompt';
 import type { Exercise, PostEffortFeeling } from '@/types';
 import { Plus } from 'lucide-react';
 
-export function Movement() {
+export function Movement({ embedded = false }: { embedded?: boolean }) {
   const { profile } = useAuthStore();
   const { weekExercises, recentExercises, loading, fetchWeek, addExercise, updatePostEffort, getPendingFeedback } = useExerciseStore();
   const { cycleInfo } = useCycle();
@@ -55,8 +55,8 @@ export function Movement() {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-4 p-4 pb-24">
-        <h1 className="font-serif text-title text-deep-plum">Sport</h1>
+      <div className={`flex flex-col gap-4 ${embedded ? '' : 'p-4 pb-24'}`}>
+        {!embedded && <h1 className="font-serif text-title text-deep-plum">Sport</h1>}
         <div className="animate-pulse space-y-3">
           <div className="h-48 rounded-3xl bg-cream-dark" />
           <div className="h-16 rounded-3xl bg-cream-dark" />
@@ -66,11 +66,13 @@ export function Movement() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 pb-24">
-      <div className="flex items-center justify-between">
-        <h1 className="font-serif text-title text-deep-plum">Sport</h1>
-        {cycleInfo && <PhaseIndicator phase={cycleInfo.phase} />}
-      </div>
+    <div className={`flex flex-col gap-4 ${embedded ? '' : 'p-4 pb-24'}`}>
+      {!embedded && (
+        <div className="flex items-center justify-between">
+          <h1 className="font-serif text-title text-deep-plum">Sport</h1>
+          {cycleInfo && <PhaseIndicator phase={cycleInfo.phase} />}
+        </div>
+      )}
 
       {cycleInfo && <PhaseRecommendation phase={cycleInfo.phase} />}
 

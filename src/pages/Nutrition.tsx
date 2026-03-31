@@ -14,7 +14,7 @@ import { AlertCircle } from 'lucide-react';
 
 const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
-export function Nutrition() {
+export function Nutrition({ embedded = false }: { embedded?: boolean }) {
   const { profile } = useAuthStore();
   const { todayMeals, weekMeals, fetchMeals, fetchWeekMeals, addMeal, updateMeal, deleteMeal } = useMealStore();
   const { cycleInfo } = useCycle();
@@ -62,11 +62,13 @@ export function Nutrition() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 pb-24">
-      <div className="flex items-center justify-between">
-        <h1 className="font-serif text-title text-deep-plum">Nutrition</h1>
-        {cycleInfo && <PhaseIndicator phase={cycleInfo.phase} />}
-      </div>
+    <div className={`flex flex-col gap-4 ${embedded ? '' : 'p-4 pb-24'}`}>
+      {!embedded && (
+        <div className="flex items-center justify-between">
+          <h1 className="font-serif text-title text-deep-plum">Nutrition</h1>
+          {cycleInfo && <PhaseIndicator phase={cycleInfo.phase} />}
+        </div>
+      )}
 
       <GISearchBar />
 
